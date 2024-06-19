@@ -1,0 +1,29 @@
+{% extends 'base.html'%}
+
+{% block body %}
+    <div class="columns is-centered">
+        <h1 class="title">Editar Categoria</h1>
+    </div>
+    <form action="/interno/categoria/editar/{{categoria.pk}}" method="post">
+        {% csrf_token %}
+
+        <div class="field">
+            <label class="label">Nome</label> <!-- label tab -->
+            <div class="control">
+                <input class="input" type="text" name="nome" id="nome" placeholder="Ex. Frutas" autofocus required maxlength="100" minlength="3"   value="{{categoria.nome}}">
+            </div>
+        </div>
+        <div class="is-pulled-right">
+            <a href="/interno/categoria" class="button is-outlined is-danger">
+                <span class="icon">
+                        <i class="fa-solid fa-xmark"></i>
+                </span>
+                <span>Cancelar</span>
+            </a>
+            <button class="button is-primary " type="submit">
+            <span class="icon"><i class="fa-regular fa-floppy-disk"></i></span>
+            <span>Salvar</span>
+            </button> <!-- button:submit tab -->
+        </div>
+    </form>
+{% endblock %}

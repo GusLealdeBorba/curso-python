@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Form</title>
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'exemplos_basicos/sobre-form.css' %}"">
+</head>
+<body>
+    <form action="sobre-fm" method="get">
+        <div>
+            <label for="campo-nome">Nome</label>
+            <input type="text" name="nome" id="campo-nome">
+        </div>
+        <div>
+            <label for="campo-sobrenome">Sobrenome</label>
+            <input type="text" name="sobrenome" id="campo-sobrenome">
+        </div>
+        <div>
+            <label for="campo-idade">Idade</label>
+            <input type="number" name="idade" id="campo-idade">
+        </div>
+        <div>
+            <label for="campo-peso">Peso</label>
+            <input type="number" name="peso" id="campo-peso">
+        </div>
+        <div>
+            <label for="campo-altura">Altura</label>
+            <input type="text" name="altura" id="campo-altura">
+        </div>
+        <button type="submit">Mostrar</button>
+    </form>
+</body>
+</html>

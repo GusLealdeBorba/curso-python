@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="columns is-centered title is-1">
+        <h1 class="title">Lista de Estados</h1>
+    </div>
+    <a  
+        class="button is-dark is-pulled-right mb-3" 
+        href="/interno/estado/cadastrar">
+        <span class="icon">
+            <i class="fa-solid fa-plus"></i>
+        </span>
+        <span>Cadastrar</span>
+    </a>
+    <table class="table is-striped is-fullwidth is-bordered is-hoverable">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Estado</th>
+                <th>Sigla</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for estado in estados %}
+            <tr>
+                <td>{{estado.pk}}</td>
+                <td>{{estado.nome}}</td>
+                <td>{{estado.sigla}}</td>
+                <td>
+                    <a  
+                        class="button is-warning"
+                        href="/interno/estado/editar/{{estado.pk}}">
+                        <span class="icon">
+                            <i class="fa-solid fa-pencil"></i>
+                        </span>
+                        <span>Editar</span>
+                        </a>
+                    <a 
+                        class="button is-danger is-outlined"
+                        href="/interno/estado/apagar/{{estado.pk}}">
+                        <span class="icon">
+                            <i class="fa-solid fa-trash"></i>
+                        </span>
+                        <span>Apagar</span>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endblock%}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compra Carro</title>
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'exemplos_basicos/carro-form.css' %}"">
+</head>
+</head>
+<body>
+    <form method="POST" action="carro-fm">
+        {% csrf_token %}
+        <div>
+            <label for="campo-modelo">Modelo</label>
+            <input type="text" name="modelo" id="campo-modelo">
+        </div>
+        <div>
+            <label for="campo-preco">Preço</label>
+            <input type="text" name="preco" id="campo-preco">
+        </div>
+        <div>
+            <label for="campo-ano">Ano de Fabricação</label>
+            <input type="date" name="ano" id="campo-ano">
+        </div>
+        <div>
+            <label for="cor">Cor</label>
+            <select name="cor" id="cor">
+                <option value="cinza">Cinza</option>
+                <option value="preto">Preto</option>
+                <option value="branco">Branco</option>
+                <option value="vermelho">Vermelho</option>
+                <option value="azul">azul</option>
+            </select> 
+        </div>
+        <button type="submit">Comprar</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{% extends 'base.html'%}
+
+{% block body %}
+    <div class="columns is-centered title is-1">
+        <h1 class="title"> Lista de Categorias </h1>
+    </div>
+    <a 
+        class="button is-black is-pulled-right mb-3"
+        href="/interno/categoria/cadastrar">
+        <span class="icon">
+            <i class="fa-solid fa-plus"></i>
+        </span>
+        <span>Cadastrar</span>
+    </a>
+    <table class="table is-striped is-fullwidth is-bordered is-hoverable ">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for categoria in categorias %}
+            <tr>    
+                <td>{{categoria.pk}}</td>
+                <td>{{categoria.nome}}</td>
+                <td>
+                    <a 
+                        class="button is-warning"
+                        href="/interno/categoria/editar/{{categoria.pk}}">
+                        <span class="icon">
+                            <i class="fa-solid fa-pencil"></i>
+                        </span>
+                        <span>
+                            Editar
+                        </span>
+                        </a>
+                    <a 
+                        class="button is-danger is-outlined"
+                        href="/interno/categoria/apagar/{{categoria.pk}}">
+                        <span class="icon">
+                            <i class="fa-solid fa-trash"></i>
+                        </span>
+                        <span>Apagar</span>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}
