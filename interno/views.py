@@ -153,4 +153,8 @@ def categoria_form_apagar(request, id: int):
     return redirect("categorias_form")
 
 
+# git status 
+# git add . 
+# git commit -m "Exemplo de form.Models em categorias-form"
+# git push origin main
     
