@@ -216,15 +216,15 @@ def cidade_cadastrar(request):
     if request.method == "POST":
         nome = request.POST.get("nome")
         id_estado = request.POST.get("estado")
-        quantidade_habitantes = request.POST.get("quantidade_habitantes")
+        quantidade = request.POST.get("quantidade")
         clima = request.POST.get("clima")
-        data_fundacao = request.POST.get("data_fundacao")
+        data = request.POST.get("data")
         cidade = models.Cidade(
             nome=nome,
             estado_id=id_estado,
-            quantidade_habitantes=quantidade_habitantes,
+            quantidade=quantidade,
             clima=clima,
-            data_fundacao=data_fundacao,
+            data=data,
         )
         cidade.save()
         return redirect("cidades")
@@ -241,14 +241,20 @@ def cidade_editar(request, id: int):
     if request.method == "POST":
         nome = request.POST.get("nome")
         id_estado = request.POST.get("estado")
-        quantidade_habitantes = request.POST.get("quantidade_habitantes")
-        clima = request.POST.get("clima")
-        data_fundacao = request.POST.get("data_fundacao")
+        quantidade = request.POST.get("quantidade")
+        clima = [
+            'Tropical',
+            'Equatorial',
+            'Semiárido',
+            'Tropical de Altitude',
+            'Tropical Atlântico'
+        ]
+        data = request.POST.get("data")
         cidade.nome = nome
         cidade.estado_id = id_estado
-        cidade.quantidade_habitantes = quantidade_habitantes
+        cidade.quantidade = quantidade
         cidade.clima = clima
-        cidade.data_fundacao = data_fundacao
+        cidade.data = data
         cidade.save()
         return redirect("cidades")
     
@@ -264,6 +270,8 @@ def cidade_apagar(request, id: int):
     cidade = models.Cidade.objects.get(pk=id)
     cidade.delete()
     return redirect("cidades")
+
+
 
 # git status 
 # git add . 

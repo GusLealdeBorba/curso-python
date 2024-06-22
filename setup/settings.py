@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'exemplos_basicos',
     'interno',
     'setup',
+    'publico',
 ]
 
 

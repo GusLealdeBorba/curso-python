@@ -1,0 +1,38 @@
+<div>
+    <span>Nome: </span>
+    <span>{{cliente.nome}}</span>
+</div>
+
+<h1>Lista de Contatos</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Tipo</th>
+            <th>Valor</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for contato in contatos %}
+        <tr>
+            <td>{{contato.tipo}}</td>
+            <td>{{contato.valor}}</td>
+            <td>
+                <button href="Editar">Editar</button>
+                <a href="/publico/contato/apagar/{{contato.id}}">Apagar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<form method="post" action="/publico/contato/cadastrar/{{cliente.id}}">
+    {% csrf_token %}
+    {{ form_contato.as_div }}
+    <button type="submit">Cadastrar</button>
+</form>
+
+{% load static %}
+<script src="{% static 'js/cliente-contato.js' %}"></script>

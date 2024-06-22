@@ -30,31 +30,41 @@
         </div>
     
         <div class="field">
-            <label class="label" for="quantidade_habitantes">Quantidade de Habitantes</label>
+            <label class="label" for="quantidade">Quantidade de Habitantes</label>
             <div class="control">
-                <input class="input" type="text" name="quantidade_habitantes" id="quantidade_habitantes" required>
+                <input class="input" type="text" name="quantidade" id="quantidade" required value="{{cidade.quantidade}}">
             </div>
         </div>
     
-        <div class="field">
+        <!-- <div class="field">
             <label class="label" for="clima">Clima</label>
-            <div class="control">
-                <select name="clima" id="clima" required>
-                    {% for cidade in cidades %}
-                    {% if cidade.id == cidade.cidade.id %}
-                    <option value="{{cidade.id}}">{{cidade.clima}}</option>
-                    {% else%}
-                    <option value="{{.id}}">{{clima.nome}}</option>
-                    {% endif%}
-                    {% endfor %}
-                </select>
+                <div class="select">
+                    <select name="clima" id="clima" required>
+                        <option>Selecione</option>
+                        {% if cidade.clima == "Tropical" %}
+                        <option value="Tropical" selected>Tropical</option>
+                        {% else %}
+                        <option value="Tropical" selected>Tropical</option>
+                        {% endif %}
+        
+                        <option value="Equatorial" {% if cidade.clima == "Equatorial" %} selected {% endif %}>Equatorial</option>
+                        <option value="Semiárido"{% if cidade.clima == "Semiárido" %} selected {% endif %}>Semiárido</option>
+                        <option value="Tropical de Altitude"{% if cidade.clima == "Tropical de Altitude" %} selected {% endif %}>Tropical de Altitude</option>
+                        <option value="Tropical Atlântico"{% if cidade.clima == "Tropical Atlântico" %} selected {% endif %}>Tropical Atlântico</option>
+                    </select> -->
+        
+                    <select name="clima" id="clima" required>
+                        {% for clima in climas %}
+                        <option value="{{clima}}" {% if cidade.clima == clima %} selected {% endif %}>{{clima}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
-        </div>
     
         <div class="field">
-        <label class="label" for="data_fundacao">Data da Fundação</label>
+        <label class="label" for="data">Data da Fundação</label>
             <div class="control">
-                <input class="input" type="date" name="data_fundacao" id="data_fundacao" required>
+                <input class="input" type="dat  e" name="data" id="data" required value="{{cidade.data}}">
             </div>
         </div>
     

@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('exemplos-basicos', include("exemplos_basicos.urls")),
     path('interno', include('interno.urls')),
+    path('publico', include('publico.urls')),
     path('', views_setup.home_setup)
 ]
