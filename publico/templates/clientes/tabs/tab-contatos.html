@@ -1,0 +1,56 @@
+<h1 class="title">Lista de Contatos</h1>
+
+<button class="button is-primary js-modal-trigger is-pulled-right mb-3" data-target="modal-contato">
+    Novo Contato
+</button>
+
+
+<table class="table is-striped is-fullwidth is-bordered is-hoverable">
+
+    <thead>
+        <tr>
+            <th>Tipo</th>
+            <th>Valor</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for contato in contatos %}
+        <tr>
+            <td>{{contato.tipo}}</td>
+            <td>{{contato.valor}}</td>
+            <td>
+                <button class="botao-editar-contato button is-warning is-outlined"
+                    data-id="{{contato.id}}">Editar</button>
+                <a class="button is-danger is-outlined" href="/publico/contato/apagar/{{contato.id}}">Apagar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+
+
+<div id="modal-contato" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Cadastro de Contato</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <form method="post" action="/publico/contato/cadastrar/{{cliente.id}}" id="form-contato">
+                {% csrf_token %}
+                {{ form_contato.as_div }}
+            </form>
+        </section>
+        <footer class="modal-card-foot">
+            <div class="buttons">
+                <button class="button">Cancelar</button>
+                <button class="button is-success" id="form-contato-botao-cadastrar">Cadastrar</button>
+            </div>
+        </footer>
+    </div>
+</div>

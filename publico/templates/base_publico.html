@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br" , data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/tabs.css' %}">
+    {% block css %}{% endblock %}
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <section class="section">
+            <div class="container">
+                {% block body %}{% endblock %}
+            </div>
+        </section>
+        <script src="https://kit.fontawesome.com/d1a6aa61a3.js" crossorigin="anonymous"></script>
+        <script src="{% static 'js/tabs.js '%}"></script>
+        <script src="{% static 'js/modal.js' %}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
