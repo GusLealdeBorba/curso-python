@@ -5,7 +5,7 @@
         <h1 class="title">Cadastro de Produto</h1>
     </div>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
     <div class="field">
@@ -41,6 +41,18 @@
             <textarea class="textarea" name="descricao" id="descricao" required></textarea>
         </div>
     </div>
+
+    <div class="file">
+        <label class="file-label">
+          <input class="file-input" type="file" name="imagem" />
+          <span class="file-cta">
+            <span class="file-icon">
+              <i class="fas fa-upload"></i>
+            </span>
+            <span class="file-label"> Escolha uma imagem </span>
+          </span>
+        </label>
+      </div>
     
     <div class="is-pulled-right">
         <a href="/interno/produto" class="button is-outlined is-danger">

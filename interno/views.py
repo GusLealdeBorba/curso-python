@@ -1,7 +1,9 @@
+from pathlib import Path
 from django.shortcuts import render, redirect
 
 from interno.forms import CategoriaForm
 from . import models
+from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 
@@ -165,11 +167,13 @@ def produto_cadastrar(request):
            preco = request.POST.get("preco")
            id_categoria = request.POST.get("categoria")
            descricao = request.POST.get("descricao")
+           imagem = __upload_imagem(request)
            produto = models.Produto(
                nome=nome,
                preco=preco,
                descricao=descricao,
                categoria_id=id_categoria,
+               imagem=imagem,
            )
            produto.save()
            return redirect("produtos")
@@ -270,6 +274,19 @@ def cidade_apagar(request, id: int):
     cidade = models.Cidade.objects.get(pk=id)
     cidade.delete()
     return redirect("cidades")
+
+
+def __upload_imagem(request):
+    if not request.FILES:
+        return None
+    imagem= request.FILES.get("imagem", None)
+    if not imagem:
+        return None
+    
+    salvador = FileSystemStorage()
+    caminho_arquivo = Path("produto_imagens") / imagem.name
+    nome_arquivo = salvador.save(caminho_arquivo, imagem)
+    return nome_arquivo
 
 
 
