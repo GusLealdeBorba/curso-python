@@ -12,7 +12,7 @@
     <div class="column">
         <div class="tabs">
             <ul>
-                <li data-tab-id="tab-contatos" class="fa-regular fa-address-card""><a>Contatos</a></li>
+                <li data-tab-id="tab-contatos" class="fa-regular fa-address-card"><a>Contatos</a></li>
                 <li data-tab-id="tab-enderecos" class="fa-solid fa-map-location-dot"><a>Enderecos</a></li>
             </ul>
         </div>
@@ -21,13 +21,17 @@
             {% include 'clientes/tabs/tab-contatos.html' %}
         </div>
         <div id="tab-enderecos" class="tab-content">
-            Olá mundo
+            {% include 'clientes/tabs/tab-enderecos.html' %}
         </div>
     </div>
 </div>
+{% endblock %}
 
-{% load static %}
+{% block scripts %}
+    {% load static %}
 
-<script src="{% static 'js/cliente-contato.js' %}"></script>
+    <script src="{% static 'js/cliente-contato.js' %}"></script>
+    <script src="{% static 'js/cliente-endereco.js' %}"></script>
+
 
 {% endblock %}

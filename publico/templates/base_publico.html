@@ -12,15 +12,23 @@
 </head>
 
 <body>
-    {% include 'navbar.html' %}
-    <section class="section">
-            <div class="container">
-                {% block body %}{% endblock %}
+{% include 'navbar.html' %}
+<section class="section">
+    <div class="container">
+        {% if registro_criado %}
+            <div>{{ registro_criado_menasagem }}</div>
+            <div class="notification is-primary">
+                <button class="delete"></button>
+                {{ registro_criado_mensagem }}
             </div>
-        </section>
-        <script src="https://kit.fontawesome.com/d1a6aa61a3.js" crossorigin="anonymous"></script>
-        <script src="{% static 'js/tabs.js '%}"></script>
-        <script src="{% static 'js/modal.js' %}"></script>
-    {% block scripts %}{% endblock %}
+        {% endif %}
+        {% block body %}{% endblock %}
+    </div>
+</section>
+<script src="https://kit.fontawesome.com/d1a6aa61a3.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/imask"></script>
+<script src="{% static 'js/tabs.js ' %}"></script>
+<script src="{% static 'js/modal.js' %}"></script>
+{% block scripts %}{% endblock %}
 </body>
 </html>

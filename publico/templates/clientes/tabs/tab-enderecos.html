@@ -1,0 +1,60 @@
+<h1 class="title">Lista de Enderecos</h1>
+
+<button class="button is-primary js-modal-trigger is-pulled-right mb-3" data-target="modal-endereco">
+    Novo Endereço
+</button>
+
+
+<table class="table is-striped is-fullwidth is-bordered is-hoverable">
+
+    <thead>
+        <tr>
+            <th>Estado</th>
+            <th>Cidade</th>
+            <th>Bairo</th>
+            <th>Rua</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for endereco in enderecos %}
+        <tr>
+            <td>{{endereco.uf}}</td>
+            <td>{{endereco.cidade}}</td>
+            <td>{{ endereco.bairro }}</td>
+            <td>{{ endereco.rua }}</td>
+            <td>
+                <button class="botao-editar-editar button is-warning is-outlined"
+                    data-id="{{endereco.id}}">Editar</button>
+                <a class="button is-danger is-outlined" href="/publico/endereco/apagar/{{endereco.id}}">Apagar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+
+
+<div id="modal-endereco" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Cadastro de Endereço</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <form method="post" action="/publico/endereco/cadastrar/{{cliente.id}}" id="form-endereco">
+                {% csrf_token %}
+                {{ form_endereco.as_div }}
+            </form>
+        </section>
+        <footer class="modal-card-foot">
+            <div class="buttons">
+                <button class="button button-close">Cancelar</button>
+                <button class="button is-success" id="form-endereco-botao-cadastrar">Cadastrar</button>
+            </div>
+        </footer>
+    </div>
+</div>

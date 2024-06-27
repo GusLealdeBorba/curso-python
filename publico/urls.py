@@ -9,7 +9,7 @@ urlpatterns = [
     path("/contato/apagar/<int:id>", views.contato_apagar),
     path("/contato/<int:id>", views.contato_detalhe),
 
-    path("/endereco/cadastrar", views.endereco_cadastrar),
+    path("/endereco/cadastrar/<int:id_cliente>", views.endereco_cadastrar),
     path("/endereco/editar/<int:id>", views.endereco_editar),
     path("/endereco/apagar/<int:id>", views.endereco_apagar),
 

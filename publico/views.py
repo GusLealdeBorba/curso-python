@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from publico import models
-from publico.form import ClienteCadastroForm, ClienteEditarDetalheForm, ContatoCadastroForm
+from publico.form import ClienteCadastroForm, ClienteEditarDetalheForm, ContatoCadastroForm, EnderecoCadastroForm
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
+
 
 # Create your views here.
 def cliente_cadastrar(request):
@@ -11,7 +12,7 @@ def cliente_cadastrar(request):
         if form.is_valid():
             cliente = form.save()
             return redirect("cliente_detalhe", id=cliente.id)
-    
+
     form = ClienteCadastroForm()
     contexto = {"form": form}
     return render(request, "clientes/cadastrar.html", contexto)
@@ -25,22 +26,38 @@ def cliente_detalhe(request, id: int):
             form_cliente.save()
 
     contatos = cliente.get_contatos()
-    
-    form_cliente = ClienteEditarDetalheForm(instance=cliente)
+    enderecos = cliente.get_enderecos()
 
+    form_cliente = ClienteEditarDetalheForm(instance=cliente)
+    form_endereco = EnderecoCadastroForm()
     form_contato = ContatoCadastroForm()
 
-    contexto = {"cliente": cliente, "contatos": contatos, "form_contato": form_contato, "form": form_cliente}
+    registro_criado = request.session.get("registro_criado")
+    registro_criado_mensagem = request.session.get("registro_criado_mensagem")
+    if registro_criado:
+        request.session.pop("registro_criado")
+        request.session.pop("registro_criado_mensagem")
+
+    contexto = {
+        "cliente": cliente,
+        "contatos": contatos,
+        "enderecos": enderecos,
+        "form_contato": form_contato,
+        "form": form_cliente,
+        "form_endereco": form_endereco,
+        "registro_criado": registro_criado,
+        "registro_criado_mensagem": registro_criado_mensagem
+    }
     return render(request, "clientes/detalhe.html", contexto)
 
 
-def contato_cadastrar(request,id_cliente: int):
+def contato_cadastrar(request, id_cliente: int):
     # Consultar o cliente por id ou retornar um 404 para o cliete
     cliente = get_object_or_404(models.Cliente, id=id_cliente)
     # Construir o form do contato com os dados preenchidos na tabela
     form = ContatoCadastroForm(request.POST)
     # Construir o objeto de modelo.Contato, não persistindo os dados no banco de dados
-    contato =form.save(commit=False) # Crinando o objeto do models.Contato
+    contato = form.save(commit=False)  # Crinando o objeto do models.Contato
     # Vincular o cliente ao contato 
     contato.cliente = cliente
     # Persistir o contato no banco de dados
@@ -68,8 +85,21 @@ def contato_detalhe(request, id: int):
     return JsonResponse(model_to_dict(contato))
 
 
-def endereco_cadastrar(request):
-    pass
+def endereco_cadastrar(request, id_cliente: int):
+    # Consultar o cliente por id ou retornar um 404 para o cliete
+    cliente = get_object_or_404(models.Cliente, id=id_cliente)
+    # Construir o form do endereco com os dados preenchidos na tabela
+    form = EnderecoCadastroForm(request.POST)
+    # Construir o objeto de modelo.Endereco, não persistindo os dados no banco de dados
+    endereco = form.save(commit=False)  # Crinando o objeto do models.Endereco
+    # Vincular o cliente ao endereco
+    endereco.cliente = cliente
+    # Persistir o endereco no banco de dados
+    endereco.save()
+    request.session['registro_criado'] = True
+    request.session['registro_criado_mensagem'] = "Endereço criado com sucesso"
+    # Redirecionar para a tela de detalhe do cliente
+    return redirect("cliente_detalhe", id=cliente.id)
 
 
 def endereco_editar(request, id: int):
@@ -77,5 +107,7 @@ def endereco_editar(request, id: int):
 
 
 def endereco_apagar(request, id: int):
-    pass
-
+    endereco = get_object_or_404(models.Endereco, id=id)
+    id_cliente = endereco.cliente.id
+    endereco.delete()
+    return redirect("cliente_detalhe", id=id_cliente)
