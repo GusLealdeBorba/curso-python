@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from publico import models
 from publico.form import ClienteCadastroForm, ClienteEditarDetalheForm, ContatoCadastroForm, EnderecoCadastroForm
@@ -17,8 +18,9 @@ def cliente_cadastrar(request):
     contexto = {"form": form}
     return render(request, "clientes/cadastrar.html", contexto)
 
-
-def cliente_detalhe(request, id: int):
+@login_required
+def cliente_detalhe(request):
+    id = request.user.id
     cliente = get_object_or_404(models.Cliente, id=id)
     if request.method == "POST":
         form_cliente = ClienteEditarDetalheForm(request.POST, request.FILES, instance=cliente)
@@ -50,7 +52,7 @@ def cliente_detalhe(request, id: int):
     }
     return render(request, "clientes/detalhe.html", contexto)
 
-
+@login_required
 def contato_cadastrar(request, id_cliente: int):
     # Consultar o cliente por id ou retornar um 404 para o cliete
     cliente = get_object_or_404(models.Cliente, id=id_cliente)
@@ -63,28 +65,28 @@ def contato_cadastrar(request, id_cliente: int):
     # Persistir o contato no banco de dados
     contato.save()
     # Redirecionar para a tela de detalhe do cliente
-    return redirect("cliente_detalhe", id=cliente.id)
+    return redirect("cliente_detalhe")
 
-
+@login_required
 def contato_editar(request, id: int):
     contato = get_object_or_404(models.Contato, id=id)
     form = ContatoCadastroForm(request.POST, instance=contato)
     contato = form.save()
-    return redirect("cliente_detalhe", contato.cliente.id)
+    return redirect("cliente_detalhe",)
 
-
+@login_required
 def contato_apagar(request, id: int):
     contato = get_object_or_404(models.Contato, id=id)
     id_cliente = contato.cliente.id
     contato.delete()
-    return redirect("cliente_detalhe", id=id_cliente)
+    return redirect("cliente_detalhe")
 
-
+@login_required
 def contato_detalhe(request, id: int):
     contato = get_object_or_404(models.Contato, id=id)
     return JsonResponse(model_to_dict(contato))
 
-
+@login_required
 def endereco_cadastrar(request, id_cliente: int):
     # Consultar o cliente por id ou retornar um 404 para o cliete
     cliente = get_object_or_404(models.Cliente, id=id_cliente)
@@ -99,15 +101,15 @@ def endereco_cadastrar(request, id_cliente: int):
     request.session['registro_criado'] = True
     request.session['registro_criado_mensagem'] = "Endereço criado com sucesso"
     # Redirecionar para a tela de detalhe do cliente
-    return redirect("cliente_detalhe", id=cliente.id)
+    return redirect("cliente_detalhe")
 
-
+@login_required
 def endereco_editar(request, id: int):
     pass
 
-
+@login_required
 def endereco_apagar(request, id: int):
     endereco = get_object_or_404(models.Endereco, id=id)
     id_cliente = endereco.cliente.id
     endereco.delete()
-    return redirect("cliente_detalhe", id=id_cliente)
+    return redirect("cliente_detalhe")
